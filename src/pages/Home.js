@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Form, Button, Container} from 'react-bootstrap';
+import {Form, Button, Container, Table} from 'react-bootstrap';
 import axios from 'axios';
+import SearchPharmacyForm from '../components/SearchPharmacyForm';
 
 function Home() {
   const [cities, setCities] = useState([]);
@@ -12,6 +13,7 @@ function Home() {
           `${process.env.REACT_APP_API_URL}/cities`
         );
         setCities(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
         console.error(error);
       }
@@ -19,43 +21,56 @@ function Home() {
     getCities();
   }, []);
 
+  const handleChangeCity = async function (e) {
+    console.log(e.target.value);
+    const city = e.target.value;
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}?city${city}`
+      );
+      setCities(response.data.data);
+      console.log(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleClickSearch = function () {};
 
   return (
     <Container className="mt-5 d-flex justify-content-start">
-      <Form className="p-5 shadow">
-        <Form.Group className="mb-4" controlId="cityForm">
-          <Form.Select aria-label="Select City">
-            <option>İl Seçiniz</option>
-            {cities &&
-              cities.map((city, i) => (
-                <option value={city.SehirSlug} key={i}>
-                  {city.SehirAd}
-                </option>
-              ))}
-          </Form.Select>
-        </Form.Group>
-
-        <Form.Group className="mb-4" controlId="countyForm">
-          <Form.Select aria-label="Select County">
-            <option>Tüm ilçeler</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </Form.Select>
-        </Form.Group>
-
-        <Container className="d-grid px-0">
-          <Button
-            onClick={handleClickSearch}
-            className="btn-block"
-            variant="dark"
-            type="submit"
-          >
-            Ara
-          </Button>
-        </Container>
-      </Form>
+      <SearchPharmacyForm cities={cities} handleChangeCity={handleChangeCity} />
+      <Container>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td colSpan={2}>Larry the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </Table>
+      </Container>
     </Container>
   );
 }
