@@ -19,38 +19,43 @@ function Home() {
     getCities();
   }, []);
 
-  return (
-    <Container fluid>
-      <Container>
-        <h1>Nöbetçi Eczaneler</h1>
-      </Container>
-      <Container className="mt-5" style={{maxWidth: '20%'}}>
-        <Form>
-          <Form.Group className="mb-3" controlId="cityForm">
-            <Form.Select aria-label="Select City">
-              <option>İl Seçiniz</option>
-              {cities &&
-                cities.map((city, i) => (
-                  <option value={city.SehirSlug} key={i}>
-                    {city.SehirAd}
-                  </option>
-                ))}
-            </Form.Select>
-          </Form.Group>
+  const handleClickSearch = function () {};
 
-          <Form.Group className="mb-3" controlId="countyForm">
-            <Form.Select aria-label="Select County">
-              <option>Tüm ilçeler</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </Form.Select>
-          </Form.Group>
-          <Button variant="primary" type="submit">
+  return (
+    <Container className="mt-5 d-flex justify-content-start">
+      <Form className="p-5 shadow">
+        <Form.Group className="mb-4" controlId="cityForm">
+          <Form.Select aria-label="Select City">
+            <option>İl Seçiniz</option>
+            {cities &&
+              cities.map((city, i) => (
+                <option value={city.SehirSlug} key={i}>
+                  {city.SehirAd}
+                </option>
+              ))}
+          </Form.Select>
+        </Form.Group>
+
+        <Form.Group className="mb-4" controlId="countyForm">
+          <Form.Select aria-label="Select County">
+            <option>Tüm ilçeler</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </Form.Select>
+        </Form.Group>
+
+        <Container className="d-grid px-0">
+          <Button
+            onClick={handleClickSearch}
+            className="btn-block"
+            variant="dark"
+            type="submit"
+          >
             Ara
           </Button>
-        </Form>
-      </Container>
+        </Container>
+      </Form>
     </Container>
   );
 }

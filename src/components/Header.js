@@ -3,9 +3,11 @@ import {Navbar, Container} from 'react-bootstrap';
 
 function Header() {
   return (
-    <Navbar className="bg-red-200">
+    <Navbar className="bg-custom-red">
       <Container>
-        <Navbar.Brand href="/">Nobetci Eczaneler</Navbar.Brand>
+        <Navbar.Brand className="text-light" href="/">
+          Nobetci Eczaneler
+        </Navbar.Brand>
       </Container>
     </Navbar>
   );
