@@ -5,9 +5,10 @@ $font-family-base: 'Source Sans Pro', sans-serif !important;
 
 // Colors
 $custom-color-red: #b81b0e;
-
+$custom-color-black: #191a19;
 $custom-colors: (
   'custom-red': $custom-color-red,
+  'custom-black': $custom-color-black,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);

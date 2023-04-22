@@ -3,10 +3,16 @@ import {Form, Container, Button} from 'react-bootstrap';
 
 function SearchPharmacyForm(props) {
   return (
-    <Form className="p-4 me-3 shadow">
+    <Form className="p-4 me-3 shadow rounded-3">
       <Form.Group className="mb-4" controlId="cityForm">
-        <Form.Select onChange={props.handleChangeCity} aria-label="Select City">
-          <option>İl Seçiniz</option>
+        <Form.Select
+          onChange={props.handleChangeCity}
+          defaultValue={''}
+          aria-label="Select City"
+        >
+          <option value={''} disabled={true}>
+            İl Seçiniz
+          </option>
           {props.cities &&
             props.cities.map((city, i) => (
               <option value={city.SehirSlug} key={i}>
@@ -16,21 +22,31 @@ function SearchPharmacyForm(props) {
         </Form.Select>
       </Form.Group>
 
-      <Form.Group className="mb-4" controlId="countyForm">
-        <Form.Select aria-label="Select County">
-          <option>Tüm ilçeler</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </Form.Select>
-      </Form.Group>
+      {props.selectedCity && (
+        <Form.Group className="mb-4" controlId="countyForm">
+          <Form.Select
+            onChange={props.handleChangeCounty}
+            aria-label="Select County"
+            defaultValue={'123'}
+          >
+            <option value={''}>Tüm ilçeler</option>
+            {props.counties &&
+              props.counties.map((county, i) => (
+                <option value={county.ilceSlug} key={i}>
+                  {county.ilceAd}
+                </option>
+              ))}
+          </Form.Select>
+        </Form.Group>
+      )}
 
       <Container className="d-grid px-0">
         <Button
-          //onClick={handleClickSearch}
+          onClick={props.handleClickSearch}
           className="btn-block"
-          variant="dark"
+          variant="success"
           type="submit"
+          disabled={props.isSearching}
         >
           Ara
         </Button>
