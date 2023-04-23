@@ -6,7 +6,7 @@ const initialState = {
   counties: [],
   selectedCounty: '',
   pharmacies: [],
-  selectedPharmacy: {},
+  selectedPharmacy: null,
   isLoading: true,
   error: null,
 };

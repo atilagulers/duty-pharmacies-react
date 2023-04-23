@@ -2,17 +2,53 @@ import React from 'react';
 
 import {Table} from 'react-bootstrap';
 import LoadingSpinner from './LoadingSpinner';
-import calculateDistance from '../utils/calculateDistance';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {
+  faHouseMedical,
+  faLocationDot,
+  faRoad,
+  faPhone,
+} from '@fortawesome/free-solid-svg-icons';
+
+import TableItem from './TableItem';
 
 function PharmacyTable(props) {
   return (
-    <Table bordered striped hover size="lg">
+    <Table striped hover>
       <thead className="bg-custom-black text-light">
         <tr>
-          <th>Eczane</th>
-          <th>Adres</th>
-          <th>Mesafe</th>
-          <th>Telefon</th>
+          <th>
+            <FontAwesomeIcon
+              className="me-2 "
+              icon={faHouseMedical}
+              style={{color: 'white'}}
+            />
+            Eczane
+          </th>
+          <th>
+            <FontAwesomeIcon
+              className="me-2"
+              icon={faLocationDot}
+              style={{color: 'white'}}
+            />
+            Adres
+          </th>
+          <th>
+            <FontAwesomeIcon
+              className="me-2"
+              icon={faRoad}
+              style={{color: 'white'}}
+            />
+            Mesafe
+          </th>
+          <th>
+            <FontAwesomeIcon
+              className="me-2"
+              icon={faPhone}
+              style={{color: 'white'}}
+            />
+            Telefon
+          </th>
         </tr>
       </thead>
 
@@ -27,21 +63,13 @@ function PharmacyTable(props) {
           props.pharmacies &&
           props.pharmacies.map((pharmacy, i) => {
             return (
-              <tr key={i} onClick={() => props.handleClickPharmacy(i)}>
-                <td className="col-2">{pharmacy.EczaneAdi}</td>
-                <td className="col-6">{pharmacy.Adresi}</td>
-                <td className="col-1">
-                  {props.userLocation
-                    ? `${calculateDistance(
-                        props.userLocation.lat,
-                        props.userLocation.lng,
-                        pharmacy.latitude,
-                        pharmacy.longitude
-                      ).toFixed(1)} KM`
-                    : '...'}
-                </td>
-                <td className="col-4">{pharmacy.Telefon}</td>
-              </tr>
+              <TableItem
+                key={i}
+                index={i}
+                pharmacy={pharmacy}
+                userLocation={props.userLocation}
+                handleClickPharmacy={props.handleClickPharmacy}
+              />
             );
           })
         )}
