@@ -1,20 +1,26 @@
 import React, {useEffect} from 'react';
 import {Form, Container, Button} from 'react-bootstrap';
 
+import {useSelector} from 'react-redux';
+
 function SearchPharmacyForm(props) {
+  const {cities, counties, selectedCity, selectedCounty} = useSelector(
+    (state) => state.query
+  );
+
   return (
     <Form className="p-4 me-3 shadow rounded-3">
       <Form.Group className="mb-4" controlId="cityForm">
         <Form.Select
           onChange={props.handleChangeCity}
-          defaultValue={''}
+          defaultValue={selectedCity}
           aria-label="Select City"
         >
           <option value={''} disabled={true}>
             İl Seçiniz
           </option>
-          {props.cities &&
-            props.cities.map((city, i) => (
+          {cities &&
+            cities.map((city, i) => (
               <option value={city.SehirSlug} key={i}>
                 {city.SehirAd}
               </option>
@@ -22,16 +28,16 @@ function SearchPharmacyForm(props) {
         </Form.Select>
       </Form.Group>
 
-      {props.selectedCity && (
+      {selectedCity && (
         <Form.Group className="mb-4" controlId="countyForm">
           <Form.Select
             onChange={props.handleChangeCounty}
             aria-label="Select County"
-            defaultValue={'123'}
+            defaultValue={selectedCounty}
           >
             <option value={''}>Tüm ilçeler</option>
-            {props.counties &&
-              props.counties.map((county, i) => (
+            {counties &&
+              counties.map((county, i) => (
                 <option value={county.ilceSlug} key={i}>
                   {county.ilceAd}
                 </option>

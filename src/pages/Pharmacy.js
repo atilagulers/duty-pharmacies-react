@@ -1,11 +1,9 @@
 import React, {useEffect} from 'react';
 
+import PharmacyDetails from '../components/PharmacyDetails';
+
 function Pharmacy() {
-  return (
-    <>
-      <h1>PHARMACY</h1>
-    </>
-  );
+  return <PharmacyDetails />;
 }
 
 export default Pharmacy;

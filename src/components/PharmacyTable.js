@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {Table} from 'react-bootstrap';
 import LoadingSpinner from './LoadingSpinner';
@@ -22,8 +22,8 @@ function PharmacyTable(props) {
             </td>
           </tr>
         ) : (
-          props.dutyPharmacies &&
-          props.dutyPharmacies.map((pharmacy, i) => {
+          props.pharmacies &&
+          props.pharmacies.map((pharmacy, i) => {
             return (
               <tr key={i} onClick={() => props.handleClickPharmacy(i)}>
                 <td className="col-2">{pharmacy.EczaneAdi}</td>
