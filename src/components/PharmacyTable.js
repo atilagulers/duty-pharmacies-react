@@ -2,6 +2,7 @@ import React from 'react';
 
 import {Table} from 'react-bootstrap';
 import LoadingSpinner from './LoadingSpinner';
+import calculateDistance from '../utils/calculateDistance';
 
 function PharmacyTable(props) {
   return (
@@ -10,6 +11,7 @@ function PharmacyTable(props) {
         <tr>
           <th>Eczane</th>
           <th>Adres</th>
+          <th>Mesafe</th>
           <th>Telefon</th>
         </tr>
       </thead>
@@ -28,6 +30,16 @@ function PharmacyTable(props) {
               <tr key={i} onClick={() => props.handleClickPharmacy(i)}>
                 <td className="col-2">{pharmacy.EczaneAdi}</td>
                 <td className="col-6">{pharmacy.Adresi}</td>
+                <td className="col-1">
+                  {props.userLocation
+                    ? `${calculateDistance(
+                        props.userLocation.lat,
+                        props.userLocation.lng,
+                        pharmacy.latitude,
+                        pharmacy.longitude
+                      ).toFixed(1)} KM`
+                    : '...'}
+                </td>
                 <td className="col-4">{pharmacy.Telefon}</td>
               </tr>
             );

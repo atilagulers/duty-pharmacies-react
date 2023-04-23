@@ -16,7 +16,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import SearchPharmacyForm from '../components/SearchPharmacyForm';
 import PharmacyTable from '../components/PharmacyTable';
 
-function Home() {
+function Home(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -122,10 +122,18 @@ function Home() {
       </Container>
       <Container className="col-lg-9">
         <Row>
+          {props.userLocation ? (
+            <p></p>
+          ) : (
+            <p>Konuma izin verilmediği için KM hesabı yapılamıyor.</p>
+          )}
+        </Row>
+        <Row>
           <PharmacyTable
             pharmacies={pharmacies}
             isFetching={isFetching}
             handleClickPharmacy={handleClickPharmacy}
+            userLocation={props.userLocation}
           />
         </Row>
       </Container>
