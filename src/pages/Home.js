@@ -1,17 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
+
 import SearchPharmacyForm from '../components/SearchPharmacyForm';
 import PharmacyTable from '../components/PharmacyTable';
-import e from 'cors';
+import PharmacyDetails from '../components/PharmacyDetails';
 
 function Home() {
+  const navigate = useNavigate();
+
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
   const [counties, setCounties] = useState([]);
   const [selectedCounty, setSelectedCounty] = useState('');
   const [dutyPharmacies, setDutyPharmacies] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
+  const [selectedPharmacy, setSelectedPharmacy] = useState({});
+  const [isFetching, setIsFetching] = useState(false);
 
   //* get cities
   useEffect(() => {
@@ -66,17 +71,23 @@ function Home() {
 
   const handleClickSearch = async function (e) {
     e.preventDefault();
-    setIsSearching(true);
+    setIsFetching(true);
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/duty-pharmacies?city=${selectedCity}&county=${selectedCounty}`
       );
+      console.log(response.data.data);
       setDutyPharmacies(response.data.data);
     } catch (error) {
       console.error(error);
     } finally {
-      setIsSearching(false);
+      setIsFetching(false);
     }
+  };
+
+  const handleClickPharmacy = function (pharmacyIndex) {
+    setSelectedPharmacy(dutyPharmacies[pharmacyIndex]);
+    navigate('/nobetci-eczane');
   };
 
   return (
@@ -90,13 +101,18 @@ function Home() {
             handleChangeCounty={handleChangeCounty}
             handleChangeCity={handleChangeCity}
             handleClickSearch={handleClickSearch}
-            isSearching={isSearching}
+            isFetching={isFetching}
           />
         </Row>
       </Container>
       <Container className="col-lg-9">
         <Row>
-          <PharmacyTable dutyPharmacies={dutyPharmacies} />
+          {/*<PharmacyDetails />*/}
+          <PharmacyTable
+            dutyPharmacies={dutyPharmacies}
+            isFetching={isFetching}
+            handleClickPharmacy={handleClickPharmacy}
+          />
         </Row>
       </Container>
     </Container>

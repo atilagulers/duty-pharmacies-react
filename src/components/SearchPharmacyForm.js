@@ -46,7 +46,7 @@ function SearchPharmacyForm(props) {
           className="btn-block"
           variant="success"
           type="submit"
-          disabled={props.isSearching}
+          disabled={props.isFetching}
         >
           Ara
         </Button>
