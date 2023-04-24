@@ -20,14 +20,9 @@ function Home(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {
-    cities,
-    counties,
-    pharmacies,
-    selectedCity,
-    selectedCounty,
-    selectedPharmacy,
-  } = useSelector((state) => state.query);
+  const {pharmacies, selectedCity, selectedCounty} = useSelector(
+    (state) => state.query
+  );
 
   const [isFetching, setIsFetching] = useState(false);
 
@@ -51,7 +46,7 @@ function Home(props) {
     return () => {
       source.cancel();
     };
-  }, []);
+  }, [dispatch]);
 
   //* update counties when select city
   useEffect(() => {
@@ -61,7 +56,7 @@ function Home(props) {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/counties?city=${selectedCity}`
         );
-        //setCounties(response.data.data);
+
         dispatch(setCounties(response.data.data));
       } catch (error) {
         console.error(error);
@@ -72,7 +67,7 @@ function Home(props) {
     return () => {
       source.cancel();
     };
-  }, [selectedCity]);
+  }, [dispatch, selectedCity]);
 
   const handleChangeCity = async function (e) {
     const city = e.target.value;

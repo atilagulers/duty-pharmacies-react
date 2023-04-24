@@ -19,7 +19,7 @@ function PharmacyDetails(props) {
     if (!selectedPharmacy) {
       navigate('/', {replace: true});
     }
-  }, []);
+  }, [navigate, selectedPharmacy]);
 
   return (
     selectedPharmacy && (
