@@ -4,8 +4,8 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 
 import {
-  setCities,
   setCounties,
+  setIsFetchingCounties,
   setPharmacies,
   setSelectedCity,
   setSelectedCounty,
@@ -26,30 +26,9 @@ function Home(props) {
 
   const [isFetching, setIsFetching] = useState(false);
 
-  //* get cities
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-    const getCities = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/cities`
-        );
-
-        //setCities(response.data.data);
-        dispatch(setCities(response.data.data));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getCities();
-
-    return () => {
-      source.cancel();
-    };
-  }, [dispatch]);
-
   //* update counties when select city
   useEffect(() => {
+    dispatch(setIsFetchingCounties(true));
     const source = axios.CancelToken.source();
     const getCounties = async () => {
       try {
@@ -60,6 +39,8 @@ function Home(props) {
         dispatch(setCounties(response.data.data));
       } catch (error) {
         console.error(error);
+      } finally {
+        if (selectedCity) dispatch(setIsFetchingCounties(false));
       }
     };
     getCounties();
@@ -88,7 +69,7 @@ function Home(props) {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/duty-pharmacies?city=${selectedCity}&county=${selectedCounty}`
       );
-
+      console.log(response);
       dispatch(setPharmacies(response.data.data));
     } catch (error) {
       console.error(error);
@@ -139,3 +120,25 @@ function Home(props) {
 }
 
 export default Home;
+
+//* get cities
+//useEffect(() => {
+//  const source = axios.CancelToken.source();
+//  const getCities = async () => {
+//    try {
+//      const response = await axios.get(
+//        `${process.env.REACT_APP_API_URL}/cities`
+//      );
+
+//      console.log(response.data.data);
+//      dispatch(setCities(response.data.data));
+//    } catch (error) {
+//      console.error(error);
+//    }
+//  };
+//  getCities();
+
+//  return () => {
+//    source.cancel();
+//  };
+//}, [dispatch]);

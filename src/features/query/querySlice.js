@@ -1,13 +1,14 @@
 import {createSlice} from '@reduxjs/toolkit';
+import cities from '../../data/cities';
 
 const initialState = {
-  cities: [],
+  cities: cities,
   selectedCity: '',
   counties: [],
   selectedCounty: '',
   pharmacies: [],
   selectedPharmacy: null,
-  isLoading: true,
+  isFetchingCounties: true,
   error: null,
 };
 
@@ -33,8 +34,8 @@ const querySlice = createSlice({
     setSelectedPharmacy: (state, action) => {
       state.selectedPharmacy = action.payload;
     },
-    setIsLoading: (state, action) => {
-      state.isLoading = action.payload;
+    setIsFetchingCounties: (state, action) => {
+      state.isFetchingCounties = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
@@ -49,7 +50,7 @@ export const {
   setSelectedCounty,
   setPharmacies,
   setSelectedPharmacy,
-  setIsLoading,
+  setIsFetchingCounties,
   setError,
 } = querySlice.actions;
 

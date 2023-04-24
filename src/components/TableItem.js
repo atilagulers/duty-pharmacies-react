@@ -1,24 +1,68 @@
 import React from 'react';
+import {Container} from 'react-bootstrap';
 import calculateDistance from '../utils/calculateDistance';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {
+  faHouseMedical,
+  faLocationDot,
+  faRoad,
+  faPhone,
+} from '@fortawesome/free-solid-svg-icons';
 
 function TableItem(props) {
   return (
-    <tr onClick={() => props.handleClickPharmacy(props.index)}>
-      <td>{props.pharmacy.EczaneAdi}</td>
-      <td className="">{props.pharmacy.Adresi}</td>
+    <tr
+      onClick={() => props.handleClickPharmacy(props.index)}
+      style={{cursor: 'pointer'}}
+    >
       <td>
-        {props.userLocation
-          ? `${calculateDistance(
-              props.userLocation.lat,
-              props.userLocation.lng,
-              props.pharmacy.latitude,
-              props.pharmacy.longitude
-            ).toFixed(1)} KM`
-          : '... KM'}
+        <Container className="d-flex gap-2 mb-1">
+          <FontAwesomeIcon icon={faHouseMedical} />
+          <p>{props.pharmacy.EczaneAdi}</p>
+        </Container>
+
+        <Container className="d-flex gap-2 mb-1">
+          <FontAwesomeIcon icon={faLocationDot} />
+          <p>{props.pharmacy.Adresi}</p>
+        </Container>
+
+        <Container className="d-flex gap-2 mb-1">
+          <FontAwesomeIcon icon={faRoad}></FontAwesomeIcon>
+          <p>
+            {props.userLocation
+              ? `${calculateDistance(
+                  props.userLocation.lat,
+                  props.userLocation.lng,
+                  props.pharmacy.latitude,
+                  props.pharmacy.longitude
+                ).toFixed(1)} KM`
+              : '... KM'}
+          </p>
+        </Container>
+
+        <Container className="d-flex gap-2 mb-1">
+          <FontAwesomeIcon icon={faPhone} />
+          <p>{props.pharmacy.Telefon}</p>
+        </Container>
       </td>
-      <td>{props.pharmacy.Telefon}</td>
     </tr>
   );
 }
 
 export default TableItem;
+
+//<tr onClick={() => props.handleClickPharmacy(props.index)}>
+//  <td>{props.pharmacy.EczaneAdi}</td>
+//  <td className="">{props.pharmacy.Adresi}</td>
+//  <td>
+//{props.userLocation
+//  ? `${calculateDistance(
+//      props.userLocation.lat,
+//      props.userLocation.lng,
+//      props.pharmacy.latitude,
+//      props.pharmacy.longitude
+//    ).toFixed(1)} KM`
+//  : '... KM'}
+//  </td>
+//  <td>{props.pharmacy.Telefon}</td>
+//</tr>;

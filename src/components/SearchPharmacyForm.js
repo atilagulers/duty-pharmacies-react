@@ -4,9 +4,8 @@ import {Form, Container, Button} from 'react-bootstrap';
 import {useSelector} from 'react-redux';
 
 function SearchPharmacyForm(props) {
-  const {cities, counties, selectedCity, selectedCounty} = useSelector(
-    (state) => state.query
-  );
+  const {cities, counties, selectedCity, selectedCounty, isFetchingCounties} =
+    useSelector((state) => state.query);
 
   return (
     <Form className="p-4 me-3 shadow rounded-3">
@@ -28,7 +27,7 @@ function SearchPharmacyForm(props) {
         </Form.Select>
       </Form.Group>
 
-      {selectedCity && (
+      {!isFetchingCounties && (
         <Form.Group className="mb-4" controlId="countyForm">
           <Form.Select
             onChange={props.handleChangeCounty}
