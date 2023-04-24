@@ -6,7 +6,7 @@ function Header() {
     <Navbar className="bg-custom-black">
       <Container>
         <Navbar.Brand className="text-light" href="/">
-          Nobetci Eczaneler
+          Nöbetçi Eczaneler
         </Navbar.Brand>
       </Container>
     </Navbar>
