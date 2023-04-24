@@ -103,7 +103,10 @@ function Home(props) {
   };
 
   return (
-    <Container className="mt-5 d-flex flex-column flex-lg-row gap-4">
+    <Container
+      className="mt-5 d-flex flex-column flex-lg-row gap-4"
+      style={{minHeight: '80vh'}}
+    >
       <Container className="col-lg-3">
         <Row>
           <SearchPharmacyForm

@@ -23,9 +23,9 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App" style={{minHeight: '80vh'}}>
       <Router>
-        <Header></Header>
+        <Header />
         <Routes>
           <Route>
             <Route
