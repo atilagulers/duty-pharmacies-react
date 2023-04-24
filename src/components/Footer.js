@@ -5,7 +5,7 @@ function Footer() {
   return (
     <Container>
       <p style={{position: 'relative', clear: 'both', textAlign: 'center'}}>
-        Tüm hakları saklıdır © 2023 - Atila Guler
+        Tüm hakları saklıdır © 2023 - Atila Güler
       </p>
     </Container>
   );

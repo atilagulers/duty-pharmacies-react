@@ -99,11 +99,16 @@ function Home(props) {
         </Row>
       </Container>
       <Container className="col-lg-9">
-        <Row>
+        <Row className="mb-2">
+          <small style={{color: 'green'}}>
+            Eczanelere tıklayarak haritadaki konumlarını görebilirsiniz.
+          </small>
           {props.userLocation ? (
-            <p></p>
+            <small></small>
           ) : (
-            <p>Konuma izin verilmediği için KM hesabı yapılamıyor.</p>
+            <small style={{color: 'red'}}>
+              Konuma izin verilmediği için KM hesabı yapılamıyor.
+            </small>
           )}
         </Row>
         <Row>
