@@ -69,7 +69,6 @@ function Home(props) {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/duty-pharmacies?city=${selectedCity}&county=${selectedCounty}`
       );
-      console.log(response);
       dispatch(setPharmacies(response.data.data));
     } catch (error) {
       console.error(error);
