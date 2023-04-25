@@ -100,9 +100,6 @@ function Home(props) {
       </Container>
       <Container className="col-lg-9">
         <Row className="mb-2">
-          <small style={{color: 'green'}}>
-            Eczanelere tıklayarak haritadaki konumlarını görebilirsiniz.
-          </small>
           {props.userLocation ? (
             <small></small>
           ) : (

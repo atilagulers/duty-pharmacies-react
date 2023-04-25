@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container} from 'react-bootstrap';
+import {Button, Container} from 'react-bootstrap';
 import calculateDistance from '../utils/calculateDistance';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
@@ -11,10 +11,7 @@ import {
 
 function TableItem(props) {
   return (
-    <tr
-      onClick={() => props.handleClickPharmacy(props.index)}
-      style={{cursor: 'pointer'}}
-    >
+    <tr style={{cursor: 'pointer'}}>
       <td>
         <Container className="d-flex gap-2 mb-1">
           <FontAwesomeIcon icon={faHouseMedical} />
@@ -40,10 +37,20 @@ function TableItem(props) {
           </p>
         </Container>
 
-        <Container className="d-flex gap-2 mb-1">
+        <Container className="d-flex gap-2">
           <FontAwesomeIcon icon={faPhone} />
           <p>{props.pharmacy.Telefon}</p>
         </Container>
+      </td>
+
+      <td>
+        <Button
+          onClick={() => props.handleClickPharmacy(props.index)}
+          variant="info"
+          style={{height: '100%'}}
+        >
+          Haritada Göster
+        </Button>
       </td>
     </tr>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {Table} from 'react-bootstrap';
 import LoadingSpinner from './LoadingSpinner';
@@ -7,10 +7,18 @@ import TableItem from './TableItem';
 
 function PharmacyTable(props) {
   return (
-    <Table striped hover>
+    <Table bordered striped hover>
       <thead className="bg-custom-black text-light">
         <tr>
-          <th>Eczaneler</th>
+          <th>
+            Eczaneler -{' '}
+            {new Date().toLocaleDateString('tr-TR', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}
+          </th>
+          <th>Konum</th>
         </tr>
       </thead>
       <tbody>
