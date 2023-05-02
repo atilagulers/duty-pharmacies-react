@@ -1,8 +1,7 @@
-# Duty Pharmacies
+# Duty Pharmacies React
 
 ## www.nobetci-eczaneler.com
 
 ### .env file
-<p>API_URL = "Duty Pharmacies API"</p>
-<p>API_AUTH_KEY = "Auth Key"</p>
-<p>PORT = "Port"</p>
+<p>REACT_APP_API_URL = "https://cloudy-boa-battledress.cyclic.app/api/v1"</p>
+
