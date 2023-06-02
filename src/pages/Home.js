@@ -15,6 +15,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import SearchPharmacyForm from '../components/SearchPharmacyForm';
 import PharmacyTable from '../components/PharmacyTable';
+import data from '../data/data.json';
 
 function Home(props) {
   const navigate = useNavigate();
@@ -28,20 +29,13 @@ function Home(props) {
 
   //* update counties when select city
   useEffect(() => {
+    console.log(data[selectedCity]);
     dispatch(setIsFetchingCounties(true));
     const source = axios.CancelToken.source();
     const getCounties = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/counties?city=${selectedCity}`
-        );
+      dispatch(setCounties(data[selectedCity]?.Ilceler));
 
-        dispatch(setCounties(response.data.data));
-      } catch (error) {
-        console.error(error);
-      } finally {
-        if (selectedCity) dispatch(setIsFetchingCounties(false));
-      }
+      if (selectedCity) dispatch(setIsFetchingCounties(false));
     };
     getCounties();
 

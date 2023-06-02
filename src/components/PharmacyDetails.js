@@ -10,6 +10,7 @@ import {
   faRoad,
   faPhone,
 } from '@fortawesome/free-solid-svg-icons';
+import GoogleMap from './GoogleMap';
 
 function PharmacyDetails(props) {
   const navigate = useNavigate();
@@ -83,14 +84,7 @@ function PharmacyDetails(props) {
             </Table>
           </Row>
           <Row>
-            <iframe
-              title={selectedPharmacy.name}
-              src={`https://maps.google.com/maps?q=${selectedPharmacy.latitude}, ${selectedPharmacy.longitude}&z=20&output=embed`}
-              allowFullScreen=""
-              aria-hidden="false"
-              tabIndex="0"
-              style={{width: '100%', height: '60vh', border: '0'}}
-            ></iframe>
+            <GoogleMap userLocation={props.userLocation} />
           </Row>
         </Container>
       </Container>

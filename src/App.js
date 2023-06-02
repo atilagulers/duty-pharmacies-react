@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Pharmacy from './pages/Pharmacy';
 import Footer from './components/Footer';
+import axios from 'axios';
 
 function App() {
   const [userLocation, setUserLocation] = useState(null);
