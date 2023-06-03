@@ -15,7 +15,7 @@ const GoogleMap = ({userLocation, selectedPharmacy}) => {
       {selectedPharmacy && (
         <GoogleMapReact
           bootstrapURLKeys={{
-            key: 'AIzaSyD0RqaaqIthEDt4_YoaR_568kKpOTHtNag',
+            key: '',
           }}
           defaultZoom={16}
           defaultCenter={{
@@ -29,6 +29,3 @@ const GoogleMap = ({userLocation, selectedPharmacy}) => {
 };
 
 export default GoogleMap;
-
-//AIzaSyBsbjUi2u8qPgzs3zY2H0aF6TAG-xJeLCI
-//AIzaSyD0RqaaqIthEDt4_YoaR_568kKpOTHtNag
