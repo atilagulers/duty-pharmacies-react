@@ -89,16 +89,13 @@ function Home(props) {
 
   const openPharmacyInGoogleMaps = (pharmacy) => {
     const {formatted_address} = pharmacy;
-    //const {lat, lng} = geometry.location;
     const encodedAddress = encodeURIComponent(formatted_address);
     const url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
 
-    if (
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      )
-    ) {
-      window.location.href = `maps://${url}`;
+    if (/Android/i.test(navigator.userAgent)) {
+      window.location.href = `https://maps.google.com/maps?q=${encodedAddress}`;
+    } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      window.location.href = `maps://maps.google.com/maps?q=${encodedAddress}`;
     } else {
       window.open(url, '_blank');
     }
