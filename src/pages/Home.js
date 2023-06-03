@@ -89,25 +89,15 @@ function Home(props) {
   };
 
   const openPharmacyInGoogleMaps = (pharmacy) => {
-    const {formatted_address, geometry} = pharmacy;
-    const {lat, lng} = geometry.location;
+    const {formatted_address} = pharmacy;
+    //const {lat, lng} = geometry.location;
     const encodedAddress = encodeURIComponent(formatted_address);
+    const url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
 
-    let url;
-
-    // Cihazın türüne bağlı olarak URL'yi oluştur
-    if (/Android/i.test(navigator.userAgent)) {
-      // Android cihazlarda Google Maps uygulamasını açmak için
-      url = `geo:${lat},${lng}?q=${encodedAddress}`;
-    } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      // iPhone/iPad/iPod cihazlarda Apple Haritalar uygulamasını açmak için
-      url = `maps://maps.apple.com/?q=${encodedAddress}&ll=${lat},${lng}`;
-    } else {
-      // Diğer cihazlarda web tabanlı Google Maps'i açmak için
-      url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
-    }
-
-    window.open(url, '_blank');
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = '_blank';
+    link.click();
   };
 
   return (
