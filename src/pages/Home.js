@@ -95,12 +95,13 @@ function Home(props) {
     const iosUrl = `maps://maps.apple.com/?q=${lat},${lng}&ll=${lat},${lng}`;
     const androidUrl = `geo:${lat},${lng}?q=${encodedAddress}&z=16`;
 
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+    const isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isAndroid = /Android/.test(navigator.userAgent);
 
     if (isIOS) {
       window.open(iosUrl, '_blank');
-    } else if (/Android/.test(userAgent)) {
+    } else if (isAndroid) {
       window.open(androidUrl, '_blank');
     } else {
       window.open(mapUrl, '_blank');
