@@ -10,7 +10,7 @@ import {
   faRoad,
   faPhone,
 } from '@fortawesome/free-solid-svg-icons';
-import GoogleMap from './GoogleMap';
+import Map from './GoogleMap';
 
 function PharmacyDetails(props) {
   const navigate = useNavigate();
@@ -84,7 +84,10 @@ function PharmacyDetails(props) {
             </Table>
           </Row>
           <Row>
-            <GoogleMap userLocation={props.userLocation} />
+            <Map
+              userLocation={props.userLocation}
+              selectedPharmacy={selectedPharmacy}
+            />
           </Row>
         </Container>
       </Container>

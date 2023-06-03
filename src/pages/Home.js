@@ -29,7 +29,6 @@ function Home(props) {
 
   //* update counties when select city
   useEffect(() => {
-    console.log(data[selectedCity]);
     dispatch(setIsFetchingCounties(true));
     const source = axios.CancelToken.source();
     const getCounties = async () => {
