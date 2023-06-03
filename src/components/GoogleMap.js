@@ -1,11 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import GoogleMapReact from 'google-map-react';
-
-const Marker = ({text, onClick}) => (
-  <div className="marker" onClick={onClick}>
-    <h1>{text}</h1>
-  </div>
-);
 
 const GoogleMap = ({userLocation, selectedPharmacy}) => {
   useEffect(() => {
