@@ -92,7 +92,7 @@ function Home(props) {
     //const {lat, lng} = geometry.location;
     const encodedAddress = encodeURIComponent(formatted_address);
     const url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
-    window.open(url);
+    window.location.href = url;
   };
 
   return (
