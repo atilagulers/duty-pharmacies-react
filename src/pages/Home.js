@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Container, Row} from 'react-bootstrap';
 import axios from 'axios';
 //import {useNavigate} from 'react-router-dom';
-
+import {isMobile} from 'react-device-detect';
 import {
   setCounties,
   setIsFetchingCounties,
@@ -89,15 +89,16 @@ function Home(props) {
   };
 
   const openPharmacyInGoogleMaps = (pharmacy) => {
-    const {formatted_address} = pharmacy;
-    //const {lat, lng} = geometry.location;
-    const encodedAddress = encodeURIComponent(formatted_address);
-    const url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
+    const {geometry, name, place_id} = pharmacy;
+    const {lat, lng} = geometry.location;
+    const encodedName = encodeURIComponent(name);
+    const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.target = '_blank';
-    link.click();
+    if (isMobile) {
+      window.location.href = `https://maps.google.com/?q=${encodedName}&query_place_id=${place_id}`;
+    } else {
+      window.open(url, '_blank');
+    }
   };
 
   return (
