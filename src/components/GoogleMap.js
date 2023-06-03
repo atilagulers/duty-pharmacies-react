@@ -6,13 +6,12 @@ const GoogleMap = ({userLocation, selectedPharmacy}) => {
   useEffect(() => {
     async function findNearestPharmacy(lat, lng, radius, apiKey) {
       try {
-        const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${selectedPharmacy.latitude}&lng=${selectedPharmacy.longitude}&radius=10`;
+        const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${selectedPharmacy.latitude}&lng=${selectedPharmacy.longitude}&radius=100`;
 
         const response = await axios.get(url);
-        const pharmacy = response.data.results[0];
+        console.log(response);
+        const pharmacy = response.data;
         const pharmacyLocation = pharmacy.geometry.location;
-        console.log(pharmacyLocation);
-        console.log(pharmacy);
 
         openPharmacyInGoogleMaps(pharmacy);
       } catch (error) {
