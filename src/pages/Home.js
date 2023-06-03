@@ -21,8 +21,9 @@ function Home(props) {
   //const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {pharmacies, selectedCity, selectedCounty, selectedPharmacy} =
-    useSelector((state) => state.query);
+  const {pharmacies, selectedCity, selectedCounty} = useSelector(
+    (state) => state.query
+  );
 
   const [isFetching, setIsFetching] = useState(false);
 
@@ -72,13 +73,13 @@ function Home(props) {
   const handleClickPharmacy = function (pharmacyIndex) {
     dispatch(setSelectedPharmacy(pharmacies[pharmacyIndex]));
 
-    findNearestPharmacy();
+    findNearestPharmacy(pharmacies[pharmacyIndex]);
     //  navigate('/nobetci-eczane');
   };
 
-  const findNearestPharmacy = async () => {
+  const findNearestPharmacy = async (_pharmacy) => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${selectedPharmacy.latitude}&lng=${selectedPharmacy.longitude}&radius=100`;
+      const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${_pharmacy.latitude}&lng=${_pharmacy.longitude}&radius=100`;
       const response = await axios.get(url);
       const pharmacy = response.data;
       openPharmacyInGoogleMaps(pharmacy);
@@ -88,17 +89,25 @@ function Home(props) {
   };
 
   const openPharmacyInGoogleMaps = (pharmacy) => {
-    const {formatted_address} = pharmacy;
+    const {formatted_address, geometry} = pharmacy;
+    const {lat, lng} = geometry.location;
     const encodedAddress = encodeURIComponent(formatted_address);
-    const url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
 
+    let url;
+
+    // Cihazın türüne bağlı olarak URL'yi oluştur
     if (/Android/i.test(navigator.userAgent)) {
-      window.location.href = `https://maps.google.com/maps?q=${encodedAddress}`;
+      // Android cihazlarda Google Maps uygulamasını açmak için
+      url = `geo:${lat},${lng}?q=${encodedAddress}`;
     } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      window.location.href = `maps://maps.google.com/maps?q=${encodedAddress}`;
+      // iPhone/iPad/iPod cihazlarda Apple Haritalar uygulamasını açmak için
+      url = `maps://maps.apple.com/?q=${encodedAddress}&ll=${lat},${lng}`;
     } else {
-      window.open(url, '_blank');
+      // Diğer cihazlarda web tabanlı Google Maps'i açmak için
+      url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
     }
+
+    window.open(url, '_blank');
   };
 
   return (
