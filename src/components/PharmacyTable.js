@@ -7,7 +7,7 @@ import TableItem from './TableItem';
 
 function PharmacyTable(props) {
   return (
-    <Table bordered striped hover>
+    <Table bordered striped>
       <thead className="bg-custom-black text-light">
         <tr>
           <th>
