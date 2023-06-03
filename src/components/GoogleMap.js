@@ -11,7 +11,6 @@ const GoogleMap = ({userLocation, selectedPharmacy}) => {
         const response = await axios.get(url);
         console.log(response);
         const pharmacy = response.data;
-        const pharmacyLocation = pharmacy.geometry.location;
 
         openPharmacyInGoogleMaps(pharmacy);
       } catch (error) {
