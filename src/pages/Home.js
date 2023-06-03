@@ -79,7 +79,8 @@ function Home(props) {
 
   const findNearestPharmacy = async (_pharmacy) => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${_pharmacy.latitude}&lng=${_pharmacy.longitude}&radius=100`;
+      const pharmacyName = _pharmacy.EczaneAdi;
+      const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${_pharmacy.latitude}&lng=${_pharmacy.longitude}&radius=1000&pharmacyName=${pharmacyName}`;
       const response = await axios.get(url);
       const pharmacy = response.data;
       openPharmacyInGoogleMaps(pharmacy);
