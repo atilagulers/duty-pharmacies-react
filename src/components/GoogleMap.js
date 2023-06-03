@@ -23,15 +23,19 @@ const GoogleMap = ({userLocation, selectedPharmacy}) => {
     const encodedAddress = encodeURIComponent(formatted_address);
 
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
-    const universalLink = `https://maps.apple.com/?q=${lat},${lng}&ll=${lat},${lng}`;
+    const iosUrl = `maps://maps.apple.com/?q=${lat},${lng}&ll=${lat},${lng}`;
+    const androidUrl = `geo:${lat},${lng}?q=${encodedAddress}&z=16`;
 
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
 
     if (isIOS) {
-      window.open(universalLink, '_blank');
+      window.open(iosUrl, '_blank');
     } else {
-      window.open(mapUrl, '_blank');
+      window.open(androidUrl, '_blank');
+      setTimeout(() => {
+        window.open(mapUrl, '_system');
+      }, 500);
     }
   };
 
