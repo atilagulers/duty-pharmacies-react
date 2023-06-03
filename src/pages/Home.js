@@ -92,10 +92,17 @@ function Home(props) {
   const openPharmacyInGoogleMaps = (pharmacy) => {
     const {geometry, place_id} = pharmacy;
     const {lat, lng} = geometry.location;
-    //const encodedName = encodeURIComponent(name);
 
     if (isMobile) {
-      window.location.href = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
+      const encodedName = encodeURIComponent(pharmacy.name);
+      const encodedQuery = encodeURIComponent(`${lat},${lng}`);
+      const url = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}&query_place_id=${place_id}&q=${encodedName}`;
+
+      // Direkt Google Haritalar uygulamasını açmak için bu URL'i kullanabilirsiniz
+      window.location.href = `comgooglemaps://?q=${encodedName}&center=${encodedQuery}`;
+
+      // Eğer Google Haritalar uygulaması yüklü değilse, web tarayıcısında açmak için bu kodu kullanabilirsiniz
+      // window.location.href = url;
     } else {
       const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
       window.open(url, '_blank');
