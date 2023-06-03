@@ -7,11 +7,8 @@ const GoogleMap = ({userLocation, selectedPharmacy}) => {
     async function findNearestPharmacy(lat, lng, radius, apiKey) {
       try {
         const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${selectedPharmacy.latitude}&lng=${selectedPharmacy.longitude}&radius=100`;
-
         const response = await axios.get(url);
-        console.log(response);
         const pharmacy = response.data;
-
         openPharmacyInGoogleMaps(pharmacy);
       } catch (error) {
         console.error('API isteği sırasında bir hata oluştu:', error);
@@ -21,11 +18,21 @@ const GoogleMap = ({userLocation, selectedPharmacy}) => {
   }, [selectedPharmacy]);
 
   const openPharmacyInGoogleMaps = (pharmacy) => {
-    //const {lat, lng} = pharmacy.geometry.location;
-    const {formatted_address} = pharmacy;
+    const {formatted_address, geometry} = pharmacy;
+    const {lat, lng} = geometry.location;
     const encodedAddress = encodeURIComponent(formatted_address);
-    const url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
-    window.open(url, '_blank');
+
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
+    const universalLink = `https://maps.apple.com/?q=${lat},${lng}&ll=${lat},${lng}`;
+
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+
+    if (isIOS) {
+      window.open(universalLink, '_blank');
+    } else {
+      window.open(mapUrl, '_blank');
+    }
   };
 
   return (
@@ -47,35 +54,3 @@ const GoogleMap = ({userLocation, selectedPharmacy}) => {
 };
 
 export default GoogleMap;
-
-//import React, {useEffect} from 'react';
-//import GoogleMapReact from 'google-map-react';
-
-//const GoogleMap = ({userLocation, selectedPharmacy}) => {
-//  useEffect(() => {
-//    const replacedText = selectedPharmacy.EczaneAdi.replace(/\s/g, '+');
-//    window.open(
-//      `https://www.google.com.tr/search?hl=tr-tr&cs=1&output=search&q=${replacedText}`,
-//      '_blank'
-//    );
-//  }, [selectedPharmacy]);
-
-//  return (
-//    <div style={{height: '400px', width: '100%'}}>
-//      {selectedPharmacy && (
-//        <GoogleMapReact
-//          bootstrapURLKeys={{
-//            key: '',
-//          }}
-//          defaultZoom={16}
-//          defaultCenter={{
-//            lat: selectedPharmacy.latitude,
-//            lng: selectedPharmacy.longitude,
-//          }}
-//        ></GoogleMapReact>
-//      )}
-//    </div>
-//  );
-//};
-
-//export default GoogleMap;
