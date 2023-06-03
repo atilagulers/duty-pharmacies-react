@@ -92,7 +92,16 @@ function Home(props) {
     //const {lat, lng} = geometry.location;
     const encodedAddress = encodeURIComponent(formatted_address);
     const url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
-    window.location.href = url;
+
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      window.location.href = `maps://${url}`;
+    } else {
+      window.open(url, '_blank');
+    }
   };
 
   return (
