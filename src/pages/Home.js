@@ -88,24 +88,11 @@ function Home(props) {
   };
 
   const openPharmacyInGoogleMaps = (pharmacy) => {
-    const {formatted_address, geometry} = pharmacy;
-    const {lat, lng} = geometry.location;
+    const {formatted_address} = pharmacy;
+    //const {lat, lng} = geometry.location;
     const encodedAddress = encodeURIComponent(formatted_address);
-    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
-    const iosUrl = `maps://maps.apple.com/?q=${lat},${lng}&ll=${lat},${lng}`;
-    const androidUrl = `geo:${lat},${lng}?q=${encodedAddress}&z=16`;
-
-    const isIOS =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isAndroid = /Android/.test(navigator.userAgent);
-
-    if (isIOS) {
-      window.open(iosUrl, '_blank');
-    } else if (isAndroid) {
-      window.open(androidUrl, '_blank');
-    } else {
-      window.open(mapUrl, '_blank');
-    }
+    const url = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${pharmacy.place_id}`;
+    window.open(url);
   };
 
   return (
