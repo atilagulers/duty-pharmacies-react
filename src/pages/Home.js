@@ -73,7 +73,7 @@ function Home(props) {
   const handleClickPharmacy = function (pharmacyIndex) {
     dispatch(setSelectedPharmacy(pharmacies[pharmacyIndex]));
 
-    //navigate('/nobetci-eczane');
+    navigate('/nobetci-eczane');
   };
 
   return (
