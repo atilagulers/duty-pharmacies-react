@@ -89,14 +89,14 @@ function Home(props) {
   };
 
   const openPharmacyInGoogleMaps = (pharmacy) => {
-    const {geometry, name, place_id} = pharmacy;
+    const {geometry, place_id} = pharmacy;
     const {lat, lng} = geometry.location;
-    const encodedName = encodeURIComponent(name);
-    const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
+    //const encodedName = encodeURIComponent(name);
 
     if (isMobile) {
-      window.location.href = `https://maps.google.com/?q=${encodedName}&query_place_id=${place_id}`;
+      window.location.href = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
     } else {
+      const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
       window.open(url, '_blank');
     }
   };
