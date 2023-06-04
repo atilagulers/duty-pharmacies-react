@@ -80,7 +80,7 @@ function Home(props) {
   const findNearestPharmacy = async (_pharmacy) => {
     try {
       const pharmacyName = _pharmacy.EczaneAdi;
-      const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${_pharmacy.latitude}&lng=${_pharmacy.longitude}&radius=2000&pharmacyName=${pharmacyName}`;
+      const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${_pharmacy.latitude}&lng=${_pharmacy.longitude}&radius=1000&pharmacyName=${pharmacyName}`;
       const response = await axios.get(url);
       const pharmacy = response.data;
       if (!pharmacy) return console.log('ECZANE BULUNAMADI');
