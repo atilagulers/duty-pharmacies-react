@@ -84,6 +84,7 @@ function Home(props) {
       const response = await axios.get(url);
       const pharmacy = response.data;
       if (!pharmacy) return console.log('ECZANE BULUNAMADI');
+      console.log(pharmacy);
       openPharmacyInGoogleMaps(pharmacy);
     } catch (error) {
       console.error('API isteği sırasında bir hata oluştu:', error);
@@ -97,9 +98,10 @@ function Home(props) {
     if (isMobile) {
       const encodedName = encodeURIComponent(pharmacy.name);
       const encodedQuery = encodeURIComponent(`${lat},${lng}`);
-      //const url = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}&query_place_id=${place_id}&q=${encodedName}`;
+      const encodedPlaceId = encodeURIComponent(place_id);
+      const url = `https://www.google.com/maps/search/?api=1&query=${encodedName}&query_place_id=${encodedPlaceId}&query=${encodedQuery}`;
 
-      window.location.href = `comgooglemaps://?q=${encodedName}&center=${encodedQuery}`;
+      window.location.href = url;
     } else {
       const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
       window.open(url, '_blank');
