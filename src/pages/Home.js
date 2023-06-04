@@ -80,9 +80,10 @@ function Home(props) {
   const findNearestPharmacy = async (_pharmacy) => {
     try {
       const pharmacyName = _pharmacy.EczaneAdi;
-      const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${_pharmacy.latitude}&lng=${_pharmacy.longitude}&radius=1000&pharmacyName=${pharmacyName}`;
+      const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${_pharmacy.latitude}&lng=${_pharmacy.longitude}&radius=2000&pharmacyName=${pharmacyName}`;
       const response = await axios.get(url);
       const pharmacy = response.data;
+      if (!pharmacy) return console.log('ECZANE BULUNAMADI');
       openPharmacyInGoogleMaps(pharmacy);
     } catch (error) {
       console.error('API isteği sırasında bir hata oluştu:', error);
@@ -96,13 +97,9 @@ function Home(props) {
     if (isMobile) {
       const encodedName = encodeURIComponent(pharmacy.name);
       const encodedQuery = encodeURIComponent(`${lat},${lng}`);
-      const url = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}&query_place_id=${place_id}&q=${encodedName}`;
+      //const url = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}&query_place_id=${place_id}&q=${encodedName}`;
 
-      // Direkt Google Haritalar uygulamasını açmak için bu URL'i kullanabilirsiniz
       window.location.href = `comgooglemaps://?q=${encodedName}&center=${encodedQuery}`;
-
-      // Eğer Google Haritalar uygulaması yüklü değilse, web tarayıcısında açmak için bu kodu kullanabilirsiniz
-      // window.location.href = url;
     } else {
       const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
       window.open(url, '_blank');
