@@ -92,18 +92,14 @@ function Home(props) {
   };
 
   const openPharmacyInGoogleMaps = (pharmacy) => {
-    const {geometry, place_id} = pharmacy;
+    const {geometry, place_id, name} = pharmacy;
     const {lat, lng} = geometry.location;
 
     if (isMobile) {
-      const encodedName = encodeURIComponent(pharmacy.name);
-      const encodedQuery = encodeURIComponent(`${lat},${lng}`);
-      const encodedPlaceId = encodeURIComponent(place_id);
-      const url = `https://www.google.com/maps/search/?api=1&query=${encodedName}&query_place_id=${encodedPlaceId}&query=${encodedQuery}`;
+      const encodedName = encodeURIComponent(name);
+      const url = `comgooglemaps://?q=${encodedName}`;
 
-      if (window.confirm('Haritaları açmak istiyor musunuz?')) {
-        window.location.href = url;
-      }
+      window.location.href = url;
     } else {
       const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
       window.open(url, '_blank');
