@@ -92,7 +92,7 @@ function Home(props) {
   };
 
   const openPharmacyInGoogleMaps = (pharmacy) => {
-    const {geometry, place_id, name} = pharmacy;
+    const {geometry, place_id} = pharmacy;
     const {lat, lng} = geometry.location;
 
     if (isMobile) {
