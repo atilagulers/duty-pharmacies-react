@@ -92,17 +92,16 @@ function Home(props) {
   };
 
   const openPharmacyInGoogleMaps = (pharmacy) => {
-    const {geometry, place_id} = pharmacy;
+    console.log(pharmacy);
+    const {geometry, place_id, name} = pharmacy;
     const {lat, lng} = geometry.location;
 
     if (isMobile) {
-      //const encodedName = encodeURIComponent(name);
-      const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
-      // `comgooglemaps://?center=${lat},${lng}&zoom=14&views=traffic&q=${encodedName}`;
-
-      setTimeout(() => {
-        window.open(url, '_blank');
-      });
+      const encodedQuery = encodeURIComponent(
+        name + ' ' + pharmacy.formatted_address
+      );
+      const url = `comgooglemaps://?q=${encodedQuery}`;
+      window.location.href = url;
     } else {
       const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
       window.open(url, '_blank');
