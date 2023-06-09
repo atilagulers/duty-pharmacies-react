@@ -97,9 +97,12 @@ function Home(props) {
 
     if (isMobile) {
       const encodedName = encodeURIComponent(name);
-      const url = `comgooglemaps://?q=${encodedName}`;
+      const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
+      // `comgooglemaps://?center=${lat},${lng}&zoom=14&views=traffic&q=${encodedName}`;
 
-      window.location.href = url;
+      setTimeout(() => {
+        window.open(url, '_blank');
+      });
     } else {
       const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
       window.open(url, '_blank');
