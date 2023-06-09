@@ -96,7 +96,7 @@ function Home(props) {
     const {lat, lng} = geometry.location;
 
     if (isMobile) {
-      const encodedName = encodeURIComponent(name);
+      //const encodedName = encodeURIComponent(name);
       const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
       // `comgooglemaps://?center=${lat},${lng}&zoom=14&views=traffic&q=${encodedName}`;
 
