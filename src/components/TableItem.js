@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Container} from 'react-bootstrap';
-import calculateDistance from '../utils/calculateDistance';
+import {calculateDistance} from '../utils';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faHouseMedical,
@@ -57,19 +57,3 @@ function TableItem(props) {
 }
 
 export default TableItem;
-
-//<tr onClick={() => props.handleClickPharmacy(props.index)}>
-//  <td>{props.pharmacy.EczaneAdi}</td>
-//  <td className="">{props.pharmacy.Adresi}</td>
-//  <td>
-//{props.userLocation
-//  ? `${calculateDistance(
-//      props.userLocation.lat,
-//      props.userLocation.lng,
-//      props.pharmacy.latitude,
-//      props.pharmacy.longitude
-//    ).toFixed(1)} KM`
-//  : '... KM'}
-//  </td>
-//  <td>{props.pharmacy.Telefon}</td>
-//</tr>;

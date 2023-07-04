@@ -1,11 +1,28 @@
 import React from 'react';
-
 import {Table} from 'react-bootstrap';
 import LoadingSpinner from './LoadingSpinner';
-
 import TableItem from './TableItem';
+import {calculateDistance} from '../utils';
 
 function PharmacyTable(props) {
+  const sortedPharmacies = [...props.pharmacies].sort((a, b) => {
+    // Calculate distances between user and pharmacies
+    const distanceA = calculateDistance(
+      props.userLocation.lat,
+      props.userLocation.lng,
+      a.latitude,
+      a.longitude
+    );
+    const distanceB = calculateDistance(
+      props.userLocation.lat,
+      props.userLocation.lng,
+      b.latitude,
+      b.longitude
+    );
+    // Sort based on distance
+    return distanceA - distanceB;
+  });
+
   return (
     <Table bordered striped>
       <thead className="bg-custom-black text-light">
@@ -29,18 +46,15 @@ function PharmacyTable(props) {
             </td>
           </tr>
         ) : (
-          props.pharmacies &&
-          props.pharmacies.map((pharmacy, i) => {
-            return (
-              <TableItem
-                key={i}
-                index={i}
-                pharmacy={pharmacy}
-                userLocation={props.userLocation}
-                handleClickPharmacy={props.handleClickPharmacy}
-              />
-            );
-          })
+          sortedPharmacies.map((pharmacy, i) => (
+            <TableItem
+              key={i}
+              index={i}
+              pharmacy={pharmacy}
+              userLocation={props.userLocation}
+              handleClickPharmacy={props.handleClickPharmacy}
+            />
+          ))
         )}
       </tbody>
     </Table>
