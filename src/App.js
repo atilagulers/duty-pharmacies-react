@@ -2,7 +2,6 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import Header from './components/Header';
 import Home from './pages/Home';
-import Pharmacy from './pages/Pharmacy';
 import Footer from './components/Footer';
 
 function App() {
@@ -33,11 +32,7 @@ function App() {
               path="/"
               element={<Home userLocation={userLocation} />}
             />
-            <Route
-              exact
-              path="/nobetci-eczane"
-              element={<Pharmacy userLocation={userLocation} />}
-            />
+
             <Route component={<h1>Hellow</h1>} />
           </Route>
         </Routes>

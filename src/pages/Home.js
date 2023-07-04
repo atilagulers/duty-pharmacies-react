@@ -60,7 +60,7 @@ function Home(props) {
     setIsFetching(true);
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/duty-pharmacies?city=${selectedCity}&county=${selectedCounty}`
+        `${process.env.REACT_APP_API_URL}/pharmacy?city=${selectedCity}&county=${selectedCounty}`
       );
       dispatch(setPharmacies(response.data.data));
     } catch (error) {
@@ -80,28 +80,46 @@ function Home(props) {
   const findNearestPharmacy = async (_pharmacy) => {
     try {
       const pharmacyName = _pharmacy.EczaneAdi;
-      const url = `${process.env.REACT_APP_API_URL}/duty-pharmacies/nearest-pharmacy?lat=${_pharmacy.latitude}&lng=${_pharmacy.longitude}&radius=1000&pharmacyName=${pharmacyName}`;
+      const url = `${process.env.REACT_APP_API_URL}/pharmacy/nearest-pharmacy?lat=${_pharmacy.latitude}&lng=${_pharmacy.longitude}&radius=500&pharmacyName=${pharmacyName}`;
       const response = await axios.get(url);
       const pharmacy = response.data;
       if (!pharmacy) return console.log('ECZANE BULUNAMADI');
       console.log(pharmacy);
-      openPharmacyInGoogleMaps(pharmacy);
+      openPharmacyInMaps(pharmacy);
     } catch (error) {
       console.error('API isteği sırasında bir hata oluştu:', error);
     }
   };
 
-  const openPharmacyInGoogleMaps = (pharmacy) => {
-    console.log(pharmacy);
+  const openPharmacyInMaps = (pharmacy) => {
     const {geometry, place_id, name} = pharmacy;
     const {lat, lng} = geometry.location;
 
     if (isMobile) {
-      const encodedQuery = encodeURIComponent(
-        name + ' ' + pharmacy.formatted_address
-      );
-      const url = `comgooglemaps://?q=${encodedQuery}`;
-      window.location.href = url;
+      const {lat, lng, name, formatted_address} = pharmacy;
+      const encodedQuery = encodeURIComponent(name + ' ' + formatted_address);
+
+      if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+        // iOS'ta Apple Haritalar uygulamasını aç
+        if (
+          navigator.userAgent.match(/Safari/i) &&
+          !navigator.userAgent.match(/CriOS/i)
+        ) {
+          const url = `maps:${lat},${lng}?q=${encodedQuery}`;
+          window.location.href = url;
+        } else {
+          const url = `https://maps.apple.com/?q=${encodedQuery}&ll=${lat},${lng}`;
+          window.location.href = url;
+        }
+      } else if (navigator.userAgent.match(/Android/i)) {
+        // Android'de Google Haritalar uygulamasını aç
+        const url = `geo:${lat},${lng}?q=${encodedQuery}`;
+        window.location.href = url;
+      } else {
+        // Diğer mobil cihazlarda, kullanıcıyı haritayı web tarayıcısında açmaya yönlendir
+        const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+        window.open(url, '_blank');
+      }
     } else {
       const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
       window.open(url, '_blank');
