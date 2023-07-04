@@ -29,10 +29,9 @@ function MapSelectionModal({
     <div>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>My Modal</Modal.Title>
+          <Modal.Title>Lütfen bir harita uygulaması seçiniz.</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>This is the content of my modal.</p>
           <Button
             className="d-block mb-3"
             variant="primary"
