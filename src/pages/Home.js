@@ -9,17 +9,19 @@ import {
   setPharmacies,
   setSelectedCity,
   setSelectedCounty,
-  setSelectedPharmacy,
 } from '../features/query/querySlice';
 import {useDispatch, useSelector} from 'react-redux';
 
 import SearchPharmacyForm from '../components/SearchPharmacyForm';
 import PharmacyTable from '../components/PharmacyTable';
 import data from '../data/data.json';
+import MapSelectionModal from '../components/MapSelectionModal';
 
 function Home(props) {
   //const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const [selectedPharmacy, setSelectedPharmacy] = useState();
 
   const {pharmacies, selectedCity, selectedCounty} = useSelector(
     (state) => state.query
@@ -71,7 +73,7 @@ function Home(props) {
   };
 
   const handleClickPharmacy = function (pharmacyIndex) {
-    dispatch(setSelectedPharmacy(pharmacies[pharmacyIndex]));
+    //dispatch(setSelectedPharmacy(pharmacies[pharmacyIndex]));
 
     findNearestPharmacy(pharmacies[pharmacyIndex]);
     //  navigate('/nobetci-eczane');
@@ -84,42 +86,32 @@ function Home(props) {
       const response = await axios.get(url);
       const pharmacy = response.data;
       if (!pharmacy) return console.log('ECZANE BULUNAMADI');
+
+      setShowModal(true);
       console.log(pharmacy);
-      openPharmacyInMaps(pharmacy);
+      setSelectedPharmacy(pharmacy);
     } catch (error) {
       console.error('API isteği sırasında bir hata oluştu:', error);
     }
   };
 
-  const openPharmacyInMaps = (pharmacy) => {
+  const openPharmacyInMaps = (pharmacy, mapService) => {
     const {geometry, place_id, name} = pharmacy;
     const {lat, lng} = geometry.location;
 
     if (isMobile) {
-      const {lat, lng, name, formatted_address} = pharmacy;
-      const encodedQuery = encodeURIComponent(name + ' ' + formatted_address);
-
-      if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-        // iOS'ta Apple Haritalar uygulamasını aç
-        if (
-          navigator.userAgent.match(/Safari/i) &&
-          !navigator.userAgent.match(/CriOS/i)
-        ) {
-          const url = `maps:${lat},${lng}?q=${encodedQuery}`;
-          window.location.href = url;
-        } else {
-          const url = `https://maps.apple.com/?q=${encodedQuery}&ll=${lat},${lng}`;
-          window.location.href = url;
-        }
-      } else if (navigator.userAgent.match(/Android/i)) {
-        // Android'de Google Haritalar uygulamasını aç
-        const url = `geo:${lat},${lng}?q=${encodedQuery}`;
-        window.location.href = url;
-      } else {
-        // Diğer mobil cihazlarda, kullanıcıyı haritayı web tarayıcısında açmaya yönlendir
-        const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-        window.open(url, '_blank');
+      const encodedQuery = encodeURIComponent(
+        name + ' ' + pharmacy.formatted_address
+      );
+      let url = '';
+      if (mapService === 'google') url = `comgooglemaps://?q=${encodedQuery}`;
+      else if (mapService === 'apple') {
+        url = `http://maps.apple.com/?q=${lat},${lng}`;
+      } else if (mapService === 'yandex') {
+        url = `yandexmaps://maps.yandex.com/?pt=${lng},${lat}&z=17`;
       }
+
+      window.location.href = url;
     } else {
       const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${place_id}`;
       window.open(url, '_blank');
@@ -131,6 +123,12 @@ function Home(props) {
       className="mt-5 d-flex flex-column flex-lg-row gap-4"
       style={{minHeight: '70vh'}}
     >
+      <MapSelectionModal
+        selectedPharmacy={selectedPharmacy}
+        openPharmacyInMaps={openPharmacyInMaps}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
       <Container className="col-lg-3">
         <Row>
           <SearchPharmacyForm
@@ -165,25 +163,3 @@ function Home(props) {
 }
 
 export default Home;
-
-//* get cities
-//useEffect(() => {
-//  const source = axios.CancelToken.source();
-//  const getCities = async () => {
-//    try {
-//      const response = await axios.get(
-//        `${process.env.REACT_APP_API_URL}/cities`
-//      );
-
-//      console.log(response.data.data);
-//      dispatch(setCities(response.data.data));
-//    } catch (error) {
-//      console.error(error);
-//    }
-//  };
-//  getCities();
-
-//  return () => {
-//    source.cancel();
-//  };
-//}, [dispatch]);
