@@ -86,14 +86,12 @@ function Home(props) {
       const response = await axios.get(url);
       const pharmacy = response.data;
       if (!pharmacy) return console.log('ECZANE BULUNAMADI');
-
+      setSelectedPharmacy(pharmacy);
       if (isMobile) {
         setShowModal(true);
       } else {
         openPharmacyInMaps(pharmacy, 'web');
       }
-
-      setSelectedPharmacy(pharmacy);
     } catch (error) {
       console.error('API isteği sırasında bir hata oluştu:', error);
     }
