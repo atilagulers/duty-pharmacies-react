@@ -1,10 +1,13 @@
-import React from 'react';
 import {Table} from 'react-bootstrap';
 import LoadingSpinner from './LoadingSpinner';
 import TableItem from './TableItem';
 import {calculateDistance} from '../utils';
+import {useDispatch, useSelector} from 'react-redux';
+import {setPharmacies} from '../features/query/querySlice';
 
 function PharmacyTable(props) {
+  const dispatch = useDispatch();
+
   const sortedPharmacies = [...props.pharmacies].sort((a, b) => {
     // Calculate distances between user and pharmacies
     const distanceA = calculateDistance(
@@ -46,7 +49,7 @@ function PharmacyTable(props) {
             </td>
           </tr>
         ) : (
-          sortedPharmacies.map((pharmacy, i) => (
+          props.pharmacies.map((pharmacy, i) => (
             <TableItem
               key={i}
               index={i}
