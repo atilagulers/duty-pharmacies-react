@@ -62,7 +62,11 @@ function Home(props) {
     setIsFetching(true);
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/pharmacy?city=${selectedCity}&county=${selectedCounty}`
+        `${
+          process.env.REACT_APP_API_URL
+        }/pharmacy?city=${selectedCity}&county=${selectedCounty}&lat=${
+          props.userLocation.lat || ''
+        }&lng=${props.userLocation.lng || ''}`
       );
       dispatch(setPharmacies(response.data.data));
     } catch (error) {
