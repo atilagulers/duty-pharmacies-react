@@ -16,6 +16,7 @@ import SearchPharmacyForm from '../components/SearchPharmacyForm';
 import PharmacyTable from '../components/PharmacyTable';
 import data from '../data/data.json';
 import MapSelectionModal from '../components/MapSelectionModal';
+import AdsComponent from '../components/AdsComponent';
 
 function Home(props) {
   //const navigate = useNavigate();
@@ -125,10 +126,9 @@ function Home(props) {
   };
 
   return (
-    <Container
-      className="mt-5 d-flex flex-column flex-lg-row gap-4"
-      style={{minHeight: '70vh'}}
-    >
+    <Container className="mt-5 d-flex flex-column flex-lg-row gap-4">
+      <AdsComponent />
+
       <MapSelectionModal
         selectedPharmacy={selectedPharmacy}
         openPharmacyInMaps={openPharmacyInMaps}
