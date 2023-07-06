@@ -8,7 +8,7 @@ const AdsComponent = (props) => {
   }, []);
 
   return (
-    <>
+    <div>
       <ins
         className="adsbygoogle"
         style={{display: 'block'}}
@@ -17,7 +17,7 @@ const AdsComponent = (props) => {
         data-ad-format="auto"
         data-full-width-responsive="true"
       ></ins>
-    </>
+    </div>
   );
 };
 
